@@ -1,27 +1,21 @@
-"use client"
 
 import { fetchAllProducts } from "@/actions";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import ProductCard from "@/components/product-card";
 
 export default async function Home() {
-  const allProductData = await fetchAllProducts();
-  console.log(allProductData)
-  const router = useRouter();
-
-  const handleDetails = (id) => {
-    router.push(`/product/${id}`)
-  }
+  const getAllProducts = await fetchAllProducts();
   return (
     <div>
-      {allProductData.map((product, index) => (
-        <div key={product?.id}>
-          <h2>{product?.title}</h2>
-          <Button onClick={() => handleDetails(product?.id)}>
-            Details
-          </Button>
-        </div>
-      ))}
+    <div className="mx-auto py-3 text-center">
+      <h1 className="font-bold text-2xl">Shopping Cart</h1>
     </div>
+    <div className="min-h-[80vh] grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-6xl mx-auto p-2">
+      {getAllProducts && getAllProducts.data && getAllProducts.data.length > 0
+        ? getAllProducts.data.map((productItem) => (
+            <ProductCard item={productItem} />
+          ))
+        : null}
+    </div>
+  </div>
   );
 }
