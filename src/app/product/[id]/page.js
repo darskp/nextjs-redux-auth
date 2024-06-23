@@ -1,9 +1,14 @@
 import { fetchProductById } from "@/actions"
 import AddToCartButton from "@/components/add-to-cart";
+import { redirect } from "next/navigation";
 
 const Product = async ({ params }) => {
     const getProductDetails = await fetchProductById(params?.id);
+ const getSession = await auth();
 
+    if (!getSession) {
+        redirect('/unauth-page')
+    }
     return (
         <div className="max-w-6xl mx-auto p-2">
             <div className="p-6">

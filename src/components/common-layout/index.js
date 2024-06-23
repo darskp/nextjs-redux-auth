@@ -1,14 +1,15 @@
 import { ReduxProvider } from '@/provider'
-import React from 'react'
 import Header from '../header';
+import { auth } from '@/auth';
 
-const CommonLayout = ({children}) => {
-  return (
-    <ReduxProvider>
-    <Header/>
-        {children}
-    </ReduxProvider>
-  )
+const CommonLayout = async ({ children }) => {
+    const getSession = await auth();
+    return (
+        <ReduxProvider>
+            <Header getSession={getSession} />
+            {children}
+        </ReduxProvider>
+    )
 }
 
 export default CommonLayout;

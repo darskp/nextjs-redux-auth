@@ -1,5 +1,8 @@
 "use server"
 
+import { signIn, signOut } from "@/auth";
+
+
 export const fetchAllProducts = async () => {
     try {
         const result = await fetch('https://dummyjson.com/products', {
@@ -35,4 +38,12 @@ export const fetchProductById = async (Id) => {
             message: "Some error occured! Please try again",
         };
     }
+}
+
+export async function loginAction() {
+  await signIn("github");
+}
+
+export async function logoutAction() {
+  await signOut();
 }
